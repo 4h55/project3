@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>哔哩哔哩 (゜-゜)つロ 干杯~-bilibili</title>
+    <style>
+    body {
+    font-family: 宋体, sans-serif;
+  }
+    /*对播放器整体进行规划*/
+    .main_video-player{
+        max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1{
+        font-size: 60px;
+    }
+    /*给了功能按钮一些特效 */
+    .functions-player button:hover{
+        background-color: #0089b3;
+    }
+    .functions-player label:hover{
+        background-color: #00a4b3;
+    }
+    /*配置了功能按钮的具体分配模式 */
+    .functions-player button{
+        padding: 10px;
+    background-color: #ffffff;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    }
+    /*配置了功能按钮的整体布局 */
+    .functions-player{
+        display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    }
+    /*配置了功能按钮的内边框 */
+    .functions-player input{
+        padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    }
+
+    </style>
+</head>
+<body>
+<div class="main_video-player">
+    <h1>播放器</h1>
+
+    <!--构建一个基本的播放器框架 -->
+    <div class="video-player">
+        <video id="videoPlayer" width="800" height="500" controls>
+          <source src="" type="video/mp4">
+        </video>
+        <hr>
+        <hr>
+        <!--设置了基本的功能按钮 -->
+          <div class="functions-player">
+              <div class="small-functions">
+                  <label for="videoFile">选择您想看的本地视频:</label>
+                  <input type="file" id="videoFile"  accept="video/*">
+                </div>
+                <button id="play-pause" >播放/暂停</button>
+                <button id="stop" >重新播放</button>
+                <label for="speed" >快进倍率</label>
+                <input id="speed" type="number" min="0.1" max="3" value="1" step="0.1"></input>
+          </div>
+    </div>
+</div>
+<!--绑定时间，使功能按钮发挥作用 -->
+<script>
+  const video = document.getElementById('videoPlayer');
+  const videoInput = document.getElementById('videoFile');
+  const playPause = document.getElementById('play-pause');
+  const stop = document.getElementById('stop');
+  const speedControl = document.getElementById('speed');
+  const body = document.body;
+  <!--实现将本地视频文件放入播出的功能 -->
+  videoInput.addEventListener('change', function() {
+    const file = videoInput.files[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      video.src = url;
+    }
+  });
+<!--实现播放暂停重播的的功能 -->
+  playPause.addEventListener('click', function() {
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  });
+  stop.addEventListener('click', function() {
+    video.pause();
+    video.currentTime = 0;
+  });
+<!--实现播放加速的的功能 -->
+  speedControl.addEventListener('input', function() {
+    video.playbackRate = speedControl.value;
+  });
+</script>
+</body>
+</html>
